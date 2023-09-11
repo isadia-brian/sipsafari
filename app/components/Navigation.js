@@ -2,8 +2,8 @@
 
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { Avatar } from "antd";
+
 import Image from "next/image";
-import { useState } from "react";
 
 const Navigation = ({ handleOpen }) => {
   return (

@@ -8,11 +8,14 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Navigation from "../components/Navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function ClientLayout({ children }) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const email = session.user.validateUser.email;
+
   const [openNav, setOpenNav] = useState(false);
 
   const handleOpen = () => {
@@ -22,7 +25,7 @@ export default function ClientLayout({ children }) {
   const handleSignOff = (e) => {
     e.preventDefault();
     signOut();
-    router.push("/login");
+    router.push("/login/emaillogin");
   };
 
   return (
@@ -41,14 +44,11 @@ export default function ClientLayout({ children }) {
             <div className="h-[90px] w-[90px] rounded-lg shadow-2xl bg-white"></div>
             <div className="flex flex-col">
               <p className="font-semibold text-lg">Brian</p>
-              <div className="flex items-center space-x-4">
-                <p className="font-light text-xs">+254 796661363</p>
-                <p className="font-light text-xs">brian@gmail.com</p>
+              <div className="flex items-center space-x-4 mb-4">
+                <p className="font-light text-xs">0796661363</p>
               </div>
-              <div className="mt-3">
-                <button className="bg-gradient-to-r from-blue-500 to-pink-500 shadow-xl rounded-3xl px-3 py-2 flex items-center justify-between text-sm">
-                  Edit Profile
-                </button>
+              <div className="flex items-center">
+                <p className="font-light text-xs">{email}</p>
               </div>
             </div>
           </div>
@@ -59,6 +59,7 @@ export default function ClientLayout({ children }) {
                   href={link}
                   key={index}
                   className="text-white font-medium uppercase flex space-x-4 w-full"
+                  onClick={() => setOpenNav(false)}
                 >
                   <p>{icon}</p>
                   <p>{title}</p>

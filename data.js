@@ -74,12 +74,12 @@ export const liqours = [
 export const links = [
   {
     title: "Home",
-    link: "#",
+    link: "/home",
     icon: <HomeIcon className="h-5 w-5" />,
   },
   {
     title: "Profile",
-    link: "#",
+    link: "/profile",
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
