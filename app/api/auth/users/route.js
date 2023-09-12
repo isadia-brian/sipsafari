@@ -72,3 +72,41 @@ export async function POST(request) {
     }
   }
 }
+
+export async function PATCH(request) {
+  try {
+    await connectMongoDB();
+
+    //Extract  the ID and email from request body
+    const { id, username, firstname, lastname, mobileNumber } =
+      await request.json();
+
+    //compare id to mongodb id and update all values
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        username,
+        firstName: firstname || null,
+        lastName: lastname || null,
+        mobile: mobileNumber || null,
+      },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return NextResponse.json(
+        { message: "No User with the Provided ID Found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "success" },
+      { headers: { "content-type": "application/json" }, status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error Connecting", error },
+      { status: 503 }
+    );
+  }
+}

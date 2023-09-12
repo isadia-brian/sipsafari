@@ -35,6 +35,8 @@ export const authOptions = {
                 lastName: returnedUser.lastName,
                 username: returnedUser.username,
                 email: returnedUser.email,
+                id: returnedUser._id,
+                mobile: returnedUser.mobile,
               };
               return { validateUser, apiToken: user.token };
             }
